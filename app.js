@@ -1,6 +1,7 @@
-// Abrir o crear la base de datos
 let db;
+let dbReady = false; // Variable para verificar si la DB está lista
 
+// Abrir o crear la base de datos
 const request = indexedDB.open('vetDB', 1);
 
 // Crear el esquema de la base de datos si no existe
@@ -23,12 +24,18 @@ request.onerror = function (e) {
 
 request.onsuccess = function (e) {
     db = e.target.result;
+    dbReady = true;  // Establecer como lista cuando se abre correctamente
     console.log("Base de datos abierta exitosamente");
     mostrarPacientes(); // Mostrar pacientes registrados
 };
 
 // Registrar paciente en IndexedDB
 function agregarPaciente(paciente) {
+    if (!dbReady) {
+        console.error("La base de datos aún no está lista.");
+        return; // No continuar si la base de datos no está lista
+    }
+
     const transaction = db.transaction(['patients'], 'readwrite');
     const objectStore = transaction.objectStore('patients');
     const request = objectStore.add(paciente);
@@ -45,6 +52,11 @@ function agregarPaciente(paciente) {
 
 // Mostrar los pacientes almacenados
 function mostrarPacientes() {
+    if (!dbReady) {
+        console.error("La base de datos aún no está lista.");
+        return; // No continuar si la base de datos no está lista
+    }
+
     const pacientesList = document.getElementById('patients-list');
     pacientesList.innerHTML = '';  // Limpiar la lista antes de agregar nuevos pacientes
 
@@ -151,31 +163,4 @@ form.addEventListener('submit', function (e) {
     agregarPaciente(paciente);
 
     form.reset();  // Limpiar el formulario
-});
-
-// Esperar a que el DOM se cargue completamente
-document.addEventListener('DOMContentLoaded', () => {
-    // Una vez cargado el contenido, ocultar la pantalla de carga
-    document.body.classList.add('loaded');
-});
-
-// Registrar Service Worker
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker
-        .register("service-worker.js")
-        .then(() => {
-            console.log("Service Worker registrado con éxito.");
-        })
-        .catch((error) => {
-            console.error("Error al registrar el Service Worker:", error);
-        });
-}
-
-// Escuchar eventos de conexión
-window.addEventListener('online', () => {
-    alert('¡Conexión restaurada!');
-});
-
-window.addEventListener('offline', () => {
-    alert('Estás desconectado');
 });
