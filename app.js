@@ -27,8 +27,6 @@ request.onsuccess = function (e) {
     mostrarPacientes(); // Mostrar pacientes registrados
 };
 
-
-
 // Registrar paciente en IndexedDB
 function agregarPaciente(paciente) {
     const transaction = db.transaction(['patients'], 'readwrite');
@@ -75,24 +73,25 @@ function mostrarPacientes() {
                     deleteButton.textContent = 'Eliminar paciente';
                     deleteButton.classList.add('delete-btn');  // Asignar la clase aquí
 
-                                    // Eliminar un paciente de IndexedDB
-                function eliminarPaciente(id) {
-                    const transaction = db.transaction(['patients'], 'readwrite');
-                    const objectStore = transaction.objectStore('patients');
-                    const request = objectStore.delete(id);  // Elimina el paciente por su ID
+                    // Eliminar un paciente de IndexedDB
+                    function eliminarPaciente(id) {
+                        console.log("Intentando eliminar paciente con ID:", id);  // Log para depuración
 
-                    request.onsuccess = function () {
-                        console.log(`Paciente con ID ${id} eliminado.`);
-                        mostrarPacientes();  // Actualizar la lista de pacientes
-                        mostrarAviso('Paciente eliminado con éxito.');  // Mostrar mensaje de éxito
-                    };
+                        const transaction = db.transaction(['patients'], 'readwrite');
+                        const objectStore = transaction.objectStore('patients');
+                        const request = objectStore.delete(id);  // Elimina el paciente por su ID
 
-                    request.onerror = function (e) {
-                        console.error("Error al eliminar paciente:", e.target.error);
-                    };
-                }
+                        request.onsuccess = function () {
+                            console.log(`Paciente con ID ${id} eliminado.`);
+                            mostrarPacientes();  // Actualizar la lista de pacientes
+                            mostrarAviso('Paciente eliminado con éxito.');  // Mostrar mensaje de éxito
+                        };
+
+                        request.onerror = function (e) {
+                            console.error("Error al eliminar paciente:", e.target.error);
+                        };
+                    }
                 
-                    // Añadir el evento de eliminación
                     // Añadir el evento de eliminación
                     deleteButton.addEventListener('click', function () {
                         eliminarPaciente(paciente.id);  // Llamar a la función para eliminar el paciente
@@ -108,13 +107,13 @@ function mostrarPacientes() {
                 pacientesList.appendChild(li);
             }
         };
-    
+
         request.onerror = function (e) {
             console.error("Error al obtener pacientes:", e.target.error);
         };
     }
 
-
+}
 
 // Mostrar aviso de éxito
 function mostrarAviso(mensaje) {
@@ -159,8 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Una vez cargado el contenido, ocultar la pantalla de carga
     document.body.classList.add('loaded');
 });
-
-
 
 // Registrar Service Worker
 if ("serviceWorker" in navigator) {
