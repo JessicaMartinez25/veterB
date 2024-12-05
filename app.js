@@ -1,7 +1,6 @@
-let db;
-let dbReady = false; // Variable para verificar si la DB está lista
-
 // Abrir o crear la base de datos
+let db;
+
 const request = indexedDB.open('vetDB', 1);
 
 // Crear el esquema de la base de datos si no existe
@@ -24,18 +23,14 @@ request.onerror = function (e) {
 
 request.onsuccess = function (e) {
     db = e.target.result;
-    dbReady = true;  // Establecer como lista cuando se abre correctamente
     console.log("Base de datos abierta exitosamente");
     mostrarPacientes(); // Mostrar pacientes registrados
 };
 
+
+
 // Registrar paciente en IndexedDB
 function agregarPaciente(paciente) {
-    if (!dbReady) {
-        console.error("La base de datos aún no está lista.");
-        return; // No continuar si la base de datos no está lista
-    }
-
     const transaction = db.transaction(['patients'], 'readwrite');
     const objectStore = transaction.objectStore('patients');
     const request = objectStore.add(paciente);
@@ -52,11 +47,6 @@ function agregarPaciente(paciente) {
 
 // Mostrar los pacientes almacenados
 function mostrarPacientes() {
-    if (!dbReady) {
-        console.error("La base de datos aún no está lista.");
-        return; // No continuar si la base de datos no está lista
-    }
-
     const pacientesList = document.getElementById('patients-list');
     pacientesList.innerHTML = '';  // Limpiar la lista antes de agregar nuevos pacientes
 
@@ -85,25 +75,24 @@ function mostrarPacientes() {
                     deleteButton.textContent = 'Eliminar paciente';
                     deleteButton.classList.add('delete-btn');  // Asignar la clase aquí
 
-                    // Eliminar un paciente de IndexedDB
-                    function eliminarPaciente(id) {
-                        console.log("Intentando eliminar paciente con ID:", id);  // Log para depuración
+                                    // Eliminar un paciente de IndexedDB
+                function eliminarPaciente(id) {
+                    const transaction = db.transaction(['patients'], 'readwrite');
+                    const objectStore = transaction.objectStore('patients');
+                    const request = objectStore.delete(id);  // Elimina el paciente por su ID
 
-                        const transaction = db.transaction(['patients'], 'readwrite');
-                        const objectStore = transaction.objectStore('patients');
-                        const request = objectStore.delete(id);  // Elimina el paciente por su ID
+                    request.onsuccess = function () {
+                        console.log(`Paciente con ID ${id} eliminado.`);
+                        mostrarPacientes();  // Actualizar la lista de pacientes
+                        mostrarAviso('Paciente eliminado con éxito.');  // Mostrar mensaje de éxito
+                    };
 
-                        request.onsuccess = function () {
-                            console.log(`Paciente con ID ${id} eliminado.`);
-                            mostrarPacientes();  // Actualizar la lista de pacientes
-                            mostrarAviso('Paciente eliminado con éxito.');  // Mostrar mensaje de éxito
-                        };
-
-                        request.onerror = function (e) {
-                            console.error("Error al eliminar paciente:", e.target.error);
-                        };
-                    }
+                    request.onerror = function (e) {
+                        console.error("Error al eliminar paciente:", e.target.error);
+                    };
+                }
                 
+                    // Añadir el evento de eliminación
                     // Añadir el evento de eliminación
                     deleteButton.addEventListener('click', function () {
                         eliminarPaciente(paciente.id);  // Llamar a la función para eliminar el paciente
@@ -119,13 +108,13 @@ function mostrarPacientes() {
                 pacientesList.appendChild(li);
             }
         };
-
+    
         request.onerror = function (e) {
             console.error("Error al obtener pacientes:", e.target.error);
         };
     }
 
-}
+
 
 // Mostrar aviso de éxito
 function mostrarAviso(mensaje) {
@@ -163,4 +152,33 @@ form.addEventListener('submit', function (e) {
     agregarPaciente(paciente);
 
     form.reset();  // Limpiar el formulario
+});
+
+// Esperar a que el DOM se cargue completamente
+document.addEventListener('DOMContentLoaded', () => {
+    // Una vez cargado el contenido, ocultar la pantalla de carga
+    document.body.classList.add('loaded');
+});
+
+
+
+// Registrar Service Worker
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+        .register("service-worker.js")
+        .then(() => {
+            console.log("Service Worker registrado con éxito.");
+        })
+        .catch((error) => {
+            console.error("Error al registrar el Service Worker:", error);
+        });
+}
+
+// Escuchar eventos de conexión
+window.addEventListener('online', () => {
+    alert('¡Conexión restaurada!');
+});
+
+window.addEventListener('offline', () => {
+    alert('Estás desconectado');
 });
