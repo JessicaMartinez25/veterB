@@ -1,0 +1,454 @@
+/* Estilo base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Cuerpo de la página */
+body {
+    background-color: #f4f4f9;
+    color: #10011f;
+    line-height: 1.6;
+}
+
+/* Encabezado con logo centrado */
+/* Encabezado con logo y texto alineados horizontalmente */
+#header {
+    display: flex; /* Utilizamos Flexbox para alinear los elementos en fila */
+    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: center; /* Centra horizontalmente los elementos */
+    background-color: #6d4d7e; /* Color de fondo oscuro */
+    color: white;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+/* Estilo para el título */
+#header h1 {
+    font-size: 24px; /* Tamaño de la fuente del título */
+    margin-left: 15px; /* Añadimos espacio entre el logo y el texto */
+    margin-top: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+/* Estilo para el logo */
+#logo {
+    width: 70px; /* Ajustamos el tamaño del logo */
+    height: auto;
+    border-radius: 60%; /* Hacemos el logo circular */
+    object-fit: cover;
+}
+
+
+/* Contenedor principal */
+#form-container {
+    max-width: 500px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos */
+h2 {
+    text-align: center;
+    color: #f2f1f3; /* Color verde oscuro */
+}
+h2 {
+    text-align: center;
+    color: #644f79; /* Color verde oscuro */
+}
+
+/* Estilo para el formulario */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center; /* Centra los elementos dentro del formulario */
+}
+
+/* Estilo para las cajas de texto */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+    background-color: #f9f9f9; /* Fondo suave para las cajas de texto */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Cambiar color de borde y sombra cuando el usuario está en el campo */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #325d75;
+    box-shadow: 0 0 8px rgba(70, 158, 202, 0.3); /* Sombra verde cuando está enfocado */
+}
+
+/* Estilo para el campo de subir archivo */
+.file-upload {
+    display: none; /* Oculta el campo de entrada real */
+}
+
+.file-upload-label {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #8b738f; /* Color lila para el botón */
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 30%;
+    max-width: 250px; /* Máximo de 250px de ancho */
+    text-transform: uppercase;
+    box-sizing: border-box; /* Asegura que padding no afecte el ancho */
+}
+
+/* Efecto hover y click en el botón de subir archivo */
+.file-upload-label:hover {
+    background-color: #2f6175; /* Verde más oscuro */
+    transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+}
+
+.file-upload-label:active {
+    background-color: #003d33; /* Color aún más oscuro cuando se hace clic */
+}
+
+/* Estilo para el botón de registrar paciente */
+.register-button {
+    background-color: #00796b; /* Color verde */
+    color: white;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 80%;
+    max-width: 150px;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+
+/* Efecto hover y click en el botón de registrar paciente */
+.register-button:hover {
+    background-color: #14607e; /* Verde más oscuro */
+    transform: scale(1.05); /* Efecto de aumento al pasar el ratón */
+}
+
+.register-button:active {
+    background-color:#2f6175; /* Color aún más oscuro cuando se hace clic */
+}
+
+/* Estilo para la lista de pacientes */
+#patients-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#patients-list li {
+    padding: 15px;
+    border-bottom: 1px solid #150218;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#patients-list img {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+#patients-list li:last-child {
+    border-bottom: none;
+}
+
+/* Responsividad */
+@media screen and (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    #form-container {
+        margin: 0;
+        padding: 15px;
+    }
+
+    form {
+        gap: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+        
+    }
+
+    button {
+        font-size: 14px;
+    }
+
+    #patients-list li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Estilo para el botón "Registrar Paciente" */
+button[type="submit"] {
+    background-color: #442c54; /* Color verde principal */
+    color: white;
+    border: none;
+    padding: 12px 25px; /* Relleno con más espacio horizontal */
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px; /* Bordes redondeados */
+    cursor: pointer;
+    text-transform: uppercase; /* Texto en mayúsculas */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    width: 100%; /* Botón que ocupa todo el ancho disponible */
+    max-width: 300px; /* Máximo de 300px de ancho */
+    box-sizing: border-box;
+    outline: none; /* Elimina el borde del enfoque */
+}
+
+/* Efecto al pasar el ratón */
+button[type="submit"]:hover {
+    background-color:#21617d; /* Verde más oscuro al pasar el ratón */
+    transform: translateY(-2px); /* Efecto de elevación */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
+/* Efecto cuando el botón está presionado */
+button[type="submit"]:active {
+    background-color: #2f6175; /* Color aún más oscuro cuando se hace clic */
+    transform: translateY(1px); /* Reduce la elevación */
+    box-shadow: none; /* Elimina la sombra cuando se hace clic */
+}
+
+/* Responsividad: Asegura que el botón se ajuste en pantallas pequeñas */
+@media screen and (max-width: 600px) {
+    button[type="submit"] {
+        width: 100%; /* El botón ocupará todo el ancho en pantallas pequeñas */
+        font-size: 14px; /* Ajuste en tamaño de fuente */
+    }
+}
+
+/* Estilo para la lista de pacientes */
+#patients-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#patients-list li {
+    display: flex;  /* Cambiar a flexbox para alinear el contenido horizontalmente */
+    justify-content: space-between;  /* Espacio entre la info del paciente y el botón */
+    align-items: center;  /* Centrar verticalmente los elementos */
+    padding: 12px 20px;
+    border-bottom: 1px solid #10011a; /* Línea sutil entre pacientes */
+}
+
+#patients-list li:last-child {
+    border-bottom: none; /* Elimina la línea en el último paciente */
+}
+
+/* Foto del paciente */
+#patients-list img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+/* Información del paciente */
+.patient-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #150218;
+}
+
+.patient-info span {
+    font-size: 14px;
+    color: #10031b;
+}
+
+/* Nombre del paciente */
+.patient-info .name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #16012a; /* Color de texto más oscuro */
+}
+
+/* Estilo para el botón de eliminar */
+.delete-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+    transform: scale(1.05);
+}
+
+.delete-btn:active {
+    background-color: #4b0808;
+    transform: translateY(1px);
+}
+
+
+
+/* Foto del paciente */
+#patients-list img {
+    border-radius: 50%;
+    width: 100px;
+    height:100px;
+    object-fit: cover;
+}
+
+/* Estilo para la información del paciente */
+.patient-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #150218;
+    gap: 8px;
+}
+
+.patient-info span {
+    font-size: 14px;
+    color: #10031b;
+    margin: 0;
+}
+
+/* Estilo del nombre del paciente */
+.patient-info .name {
+    font-weight: bold;
+    font-size: 16px;
+    color: #16012a; /* Color de texto más oscuro */
+}
+
+/* Estilo para el detalle del propietario y otra información */
+.patient-info .owner,
+.patient-info .animal-type,
+.patient-info .age {
+    font-size: 14px;
+    color: #250228;
+}
+
+/* Responsividad: Ajusta la tabla en pantallas pequeñas */
+@media screen and (max-width: 600px) {
+    #patients-list li {
+        grid-template-columns: 1fr; /* En pantallas pequeñas, solo una columna */
+        text-align: left;
+    }
+
+    #patients-list li:last-child {
+        border-bottom: none;
+    }
+}
+
+
+
+/* Estilo para la pantalla de carga */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
+    flex-direction: column;
+}
+
+/* Contenedor de las huellitas */
+.paw-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    animation: bounce 1.5s ease-in-out infinite;
+}
+
+/* Estilo para cada huella */
+.paw {
+    width: 50px;
+    height: 50px;
+    background-image: url('/images/paw.png'); /* Asegúrate de tener una imagen de huella */
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    animation: bounce 1.5s ease-in-out infinite;
+}
+
+/* Animación para las huellas */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Estilo del texto */
+#loading-screen p {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Inicialmente, la pantalla de carga está visible */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
+    flex-direction: column;
+    transition: opacity 0.5s ease, visibility 0s 0.5s;  /* Animación de desvanecimiento */
+}
+
+/* Cuando la clase 'loaded' se agrega, la pantalla de carga se desvanece */
+.loaded #loading-screen {
+    opacity: 1;  /* Desvanecer */
+    visibility: hidden;  /* Hacerlo invisible */
+}
+

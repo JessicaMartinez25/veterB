@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veterinaria PWA</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="loading-screen">
+        <div class="paw-container">
+            <div class="paw"></div>
+            <div class="paw"></div>
+            <div class="paw"></div>
+        </div>
+        <p>Cargando...</p>
+    </div>
+    
+
+
+    <!-- Encabezado con logo -->
+    <header id="header">
+        <img src="images/icon.png" alt="Veterinaria Belka" id="logo">
+        <h1>BELKA - Clínica Veterinaria</h1>
+    </header>
+
+    <!-- Contenedor del formulario -->
+    <div id="form-container">
+        <form id="registro-form">
+            <h2>Registrar Paciente</h2>
+            
+            <!-- Campos del paciente -->
+            <input type="text" id="patient-name" placeholder="Nombre del paciente" required>
+            <input type="text" id="owner-name" placeholder="Nombre del propietario" required>
+            
+            <!-- Desplegables para seleccionar el tipo de animal y género -->
+            <select id="animal-type" required>
+                <option value="">Seleccione tipo de animal</option>
+                <option value="Perro">Perro</option>
+                <option value="Gato">Gato</option>
+                <option value="Conejo">Conejo</option>
+                <option value="Otro">Otro</option>
+            </select>
+
+            <select id="gender" required>
+                <option value="">Seleccione género</option>
+                <option value="Macho">Macho</option>
+                <option value="Hembra">Hembra</option>
+            </select>
+
+            <!-- Edad -->
+            <input type="number" id="age" placeholder="Edad" required>
+
+            <!-- Campos para tratamientos y citas -->
+            <textarea id="treatment" placeholder="Tratamiento realizado" rows="3"></textarea>
+            <input type="date" id="appointment-date" placeholder="Fecha de cita" required>
+
+            <!-- Campo para subir la foto -->
+            <input type="file" id="patient-photo" accept="image/*" class="file-upload" />
+        <label for="patient-photo" class="file-upload-label">Subir Foto del Paciente</label>
+        <button type="submit">Registrar Paciente</button>
+
+        </form>
+    </div>
+
+    <h2>Pacientes Registrados</h2>
+    <ul id="patients-list"></ul>
+
+    <script src="app.js"></script>
+    <script src="service-worker.js"></script>
+</body>
+</html>
